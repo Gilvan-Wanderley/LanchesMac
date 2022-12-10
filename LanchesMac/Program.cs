@@ -1,4 +1,5 @@
 using LanchesMac.Context;
+using LanchesMac.Models;
 using LanchesMac.Repositories;
 using LanchesMac.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddTransient<ILancheRepository,LancheRepository>();
 builder.Services.AddTransient<ICategoriaRepository,CategoriaRepository>();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
+
 
 var app = builder.Build();
 
@@ -28,11 +34,17 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseSession();
+
+
+app.MapControllerRoute(name: "categoriaFiltro",
+                       pattern: "Lanche/{action}/{categoria?}",
+                       defaults: new {controller = "Lanche",
+                                      action = "List"});
+
+app.MapControllerRoute(name: "default",
+                       pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
