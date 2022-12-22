@@ -1,0 +1,48 @@
+@model LoginViewModel;
+
+<table>
+    <tr>
+        <td>
+            <img src="~/images/icons8-usuário-50.png" 
+                alt="Registrar Usuário" 
+                width="80" 
+                height="60"/>
+            </td>
+        <td>
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <h4>Registrar usuário</h4>
+                    <form asp-controller="Account"
+                        asp-action="Register"
+                        method="post">
+                        <hr/>
+                        <div class="text-danger" 
+                            asp-validation-summary="All">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserName">Usuário</label>
+                            <input asp-for="UserName"
+                                class="form-control"/>
+                            <span asp-validation-for="UserName"
+                                class="text-danger">
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password">Senha</label>
+                            <input asp-for="Password"
+                                class="form-control"/>
+                            <span asp-validation-for="Password"
+                                class="text-danger">
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit"
+                                class="btn btn-success"
+                                value="Registrar"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

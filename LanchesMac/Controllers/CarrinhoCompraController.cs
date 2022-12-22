@@ -2,6 +2,7 @@ using LanchesMac.Models;
 using LanchesMac.ViewModels;
 using LanchesMac.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LanchesMac.Controllers;
 
@@ -28,6 +29,7 @@ public class CarrinhoCompraController : Controller
         return View(carrinhoCompraVM);
     }
 
+    [Authorize]
     public RedirectToActionResult AdicionarItemNoCarrinhoCompra(int lancheId)
     {
         var lancheSelecionado = lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
@@ -39,6 +41,7 @@ public class CarrinhoCompraController : Controller
         return RedirectToAction("Index");
     }
 
+    [Authorize]
     public IActionResult RemoverItemDoCarrinhoCompra(int lancheId)
     {
         var lancheSelecionado = lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
